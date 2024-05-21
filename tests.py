@@ -18,7 +18,7 @@ class MyAppTests(unittest.TestCase):
     def test_getemployees(self):
         response = self.app.get("/employees")
         self.assertEqual(response.status_code, 200)
-        self.assertTrue("AHMAD" in response.data.decode())
+        self.assertTrue("Ahmad" in response.data.decode())
 
 
 if __name__ == "__main__":
