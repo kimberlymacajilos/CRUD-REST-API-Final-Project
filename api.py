@@ -28,5 +28,17 @@ def get_employees():
 
     return make_response(jsonify(data), 200)
 
+@app.route("/employees/<int:ssn>", methods=["GET"])
+def get_employees_by_ssn(ssn):
+    cur = mysql.connection.cursor()
+    query = """
+    SELECT * FROM company.employee where ssn = {}
+    """.format(ssn)
+    cur.execute(query)
+    data = cur.fetchall()
+    cur.close()
+
+    return make_response(jsonify(data), 200)
+
 if __name__ == "__main__":
     app.run(debug=True)
