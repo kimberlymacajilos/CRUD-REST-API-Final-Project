@@ -1,4 +1,4 @@
-from flask import Flask, make_response, jsonify
+from flask import Flask, make_response, jsonify, request
 from flask_mysqldb import MySQL
 
 app = Flask(__name__)
@@ -32,6 +32,31 @@ def get_employees():
 def get_employees_by_ssn(ssn):
     data = data_fetch("""SELECT * FROM company.employee where ssn = {}""".format(ssn))
     return make_response(jsonify(data), 200)
+
+@app.route("/employees", methods=["POST"])
+def add_employee():
+    cur = mysql.connection.cursor()
+    info = request.get_json()
+    ssn = info["ssn"]
+    Fname = info["Fname"]
+    Minit = info["Minit"]
+    Lname = info["Lname"]
+    Bdate = info["Bdate"]
+    Address = info["Address"]
+    Sex = info["Sex"]
+    Salary = info["Salary"]
+    Super_ssn = info["Super_ssn"]
+    Dl_id = info["Dl_id"]
+    cur.execute(
+        """ INSERT INTO employee (ssn, Fname, Minit, Lname, Bdate, Address, Sex, Salary, Super_ssn, Dl_id) VALUE (%s, %s, %s, %s, %s, 
+        %s, %s, %s, %s, %s)""", (ssn, Fname, Minit, Lname, Bdate, Address, Sex, Salary, Super_ssn, Dl_id)
+    )
+    mysql.connection.commit()
+    print("row(s) affected :{}".format(cur.rowcount))
+    rows_affected = cur.rowcount
+    cur.close()
+    return make_response(jsonify({"message": "employee added successfully", "row_affected": rows_affected}), 201)
+
 
 if __name__ == "__main__":
     app.run(debug=True)
