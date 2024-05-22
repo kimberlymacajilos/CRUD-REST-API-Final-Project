@@ -21,9 +21,9 @@ class MyAppTests(unittest.TestCase):
         self.assertTrue("Ahmad" in response.data.decode())
 
     def test_getemployees_by_ssn(self):
-        response = self.app.get("/employees/987987987")
+        response = self.app.get("/employees/639639639")
         self.assertEqual(response.status_code, 200)
-        self.assertTrue("Ahmad" in response.data.decode())
+        self.assertTrue("Danice" in response.data.decode())
 
 
 if __name__ == "__main__":
