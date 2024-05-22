@@ -69,5 +69,14 @@ def update_employee(ssn):
     cur.close()
     return make_response(jsonify({"message": "employee updated successfully", "row_affected": rows_affected}), 200)
 
+@app.route("/employees/<int:ssn>", methods=["DELETE"])
+def delete_actor(ssn):
+    cur = mysql.connection.cursor()
+    cur.execute(""" DELETE FROM employee where ssn = %s""", (ssn))
+    mysql.connection.commit()
+    rows_affected = cur.rowcount
+    cur.close()
+    return make_response(jsonify({"message": "employee deleted successfully", "row_affected": rows_affected}), 200)
+
 if __name__ == "__main__":
     app.run(debug=True)
