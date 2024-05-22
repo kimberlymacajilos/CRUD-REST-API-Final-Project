@@ -63,7 +63,7 @@ def update_employee(ssn):
     info = request.get_json()
     Fname = info["Fname"]
     Lname = info["Lname"]
-    cur.execute(""" UPDATE employee SET Fname = %s, Lname = %s WHERE employee ssn = %s""", (Fname, Lname, ssn))
+    cur.execute(""" UPDATE employee SET Fname = %s, Lname = %s WHERE ssn = %s""", (Fname, Lname, ssn))
     mysql.connection.commit()
     rows_affected = cur.rowcount
     cur.close()
