@@ -21,9 +21,9 @@ class MyAppTests(unittest.TestCase):
         self.assertTrue("Ahmad" in response.data.decode())
 
     def test_getemployees_by_ssn(self):
-        response = self.app.get("/employees/639639639")
+        response = self.app.get("/employees/453453453")
         self.assertEqual(response.status_code, 200)
-        self.assertTrue("Wolfgang" in response.data.decode())
+        self.assertTrue("Joyce" in response.data.decode())
 
     def test_getdependentname_by_essn(self):
         response = self.app.get("/dependents/987654321")
