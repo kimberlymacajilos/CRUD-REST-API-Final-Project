@@ -72,7 +72,7 @@ def update_employee(ssn):
 @app.route("/employees/<int:ssn>", methods=["DELETE"])
 def delete_actor(ssn):
     cur = mysql.connection.cursor()
-    cur.execute(""" DELETE FROM company.employee where ssn = %s""", (ssn))
+    cur.execute(""" DELETE FROM company.employee where ssn = %s""", (ssn,))
     mysql.connection.commit()
     rows_affected = cur.rowcount
     cur.close()
