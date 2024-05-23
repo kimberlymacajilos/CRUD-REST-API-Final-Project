@@ -25,6 +25,11 @@ class MyAppTests(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTrue("Wolfgang" in response.data.decode())
 
+    def test_getdependentname_by_essn(self):
+        response = self.app.get("/dependents/987654321")
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue("Abner" in response.data.decode())
+
 
 if __name__ == "__main__":
     unittest.main()
