@@ -35,7 +35,7 @@ def get_employees_by_ssn(ssn):
 
 @app.route("/dependents/<int:Essn>", methods=["GET"])
 def get_dependentname_by_essn(Essn):
-    data = data_fetch("""SELECT Dependent_name FROM company.dependent where Essn = {}""".format(Essn))
+    data = data_fetch("""SELECT * FROM company.dependent where Essn = {}""".format(Essn))
     return make_response(jsonify(data), 200)
 
 @app.route("/employees", methods=["POST"])
