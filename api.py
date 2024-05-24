@@ -43,6 +43,11 @@ def get_deptlocations():
     data = data_fetch("""SELECT * FROM company.dept_locations;""")
     return make_response(jsonify(data), 200)
 
+@app.route("/workson/<int:Pno>", methods=["GET"])
+def get_essn_hours(ssn):
+    data = data_fetch("""SELECT Essn, Hours FROM company.works_on where Pno = {}""".format(ssn))
+    return make_response(jsonify(data), 200)
+
 @app.route("/employees", methods=["POST"])
 def add_employee():
     cur = mysql.connection.cursor()
