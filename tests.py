@@ -39,6 +39,11 @@ class MyAppTests(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTrue("Abner" in response.data.decode())
 
+    def test_get_essn_hours(self):
+        response = self.app.get("/workson/1", headers=self.get_headers())
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue("123456789" in response.data.decode())
+
 
 if __name__ == "__main__":
     unittest.main()
