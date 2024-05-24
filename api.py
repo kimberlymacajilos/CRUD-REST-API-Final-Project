@@ -42,36 +42,43 @@ def get_employees():
     return make_response(jsonify(data), 200)
 
 @app.route("/employees/<int:ssn>", methods=["GET"])
+@jwt_required()
 def get_employees_by_ssn(ssn):
     data = data_fetch("""SELECT * FROM company.employee where ssn = {}""".format(ssn))
     return make_response(jsonify(data), 200)
 
 @app.route("/dependents/<int:Essn>", methods=["GET"])
+@jwt_required()
 def get_dependentname_by_essn(Essn):
     data = data_fetch("""SELECT Dependent_name, Relationship FROM company.dependent where Essn = {}""".format(Essn))
     return make_response(jsonify(data), 200)
 
 @app.route("/deptlocations", methods=["GET"])
+@jwt_required()
 def get_deptlocations():
     data = data_fetch("""SELECT * FROM company.dept_locations;""")
     return make_response(jsonify(data), 200)
 
 @app.route("/workson/<int:Pno>", methods=["GET"])
+@jwt_required()
 def get_essn_hours(Pno):
     data = data_fetch("""SELECT Essn, Hours FROM company.works_on where Pno = {}""".format(Pno))
     return make_response(jsonify(data), 200)
 
 @app.route("/project", methods=["GET"])
+@jwt_required()
 def get_project():
     data = data_fetch("""SELECT * FROM company.project;""")
     return make_response(jsonify(data), 200)
 
 @app.route("/department", methods=["GET"])
+@jwt_required()
 def get_department():
     data = data_fetch("""SELECT * FROM company.department;""")
     return make_response(jsonify(data), 200)
 
 @app.route("/employees", methods=["POST"])
+@jwt_required()
 def add_employee():
     cur = mysql.connection.cursor()
     info = request.get_json()
@@ -96,6 +103,7 @@ def add_employee():
     return make_response(jsonify({"message": "employee added successfully", "row_affected": rows_affected}), 201)
 
 @app.route("/employees/<int:ssn>", methods=["PUT"])
+@jwt_required()
 def update_employee(ssn):
     cur = mysql.connection.cursor()
     info = request.get_json()
@@ -108,6 +116,7 @@ def update_employee(ssn):
     return make_response(jsonify({"message": "employee updated successfully", "row_affected": rows_affected}), 200)
 
 @app.route("/employees/<int:ssn>", methods=["DELETE"])
+@jwt_required()
 def delete_actor(ssn):
     cur = mysql.connection.cursor()
     cur.execute(""" DELETE FROM company.employee where ssn = %s""", (ssn,))
@@ -117,6 +126,7 @@ def delete_actor(ssn):
     return make_response(jsonify({"message": "employee deleted successfully", "row_affected": rows_affected}), 200)
 
 @app.route("/employees/format", methods=["GET"])
+@jwt_required()
 def get_params():
     fmt = request.args.get('ssn')
     foo = request.args.get('aaaa')
