@@ -36,6 +36,7 @@ def login():
     return jsonify({"msg": "Bad username or password"}), 401
 
 @app.route("/employees", methods=["GET"])
+@jwt_required()
 def get_employees():
     data = data_fetch("""SELECT * FROM company.employee;""")
     return make_response(jsonify(data), 200)
