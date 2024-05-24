@@ -44,8 +44,8 @@ def get_deptlocations():
     return make_response(jsonify(data), 200)
 
 @app.route("/workson/<int:Pno>", methods=["GET"])
-def get_essn_hours(ssn):
-    data = data_fetch("""SELECT Essn, Hours FROM company.works_on where Pno = {}""".format(ssn))
+def get_essn_hours(Pno):
+    data = data_fetch("""SELECT Essn, Hours FROM company.works_on where Pno = {}""".format(Pno))
     return make_response(jsonify(data), 200)
 
 @app.route("/employees", methods=["POST"])
