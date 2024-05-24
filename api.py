@@ -1,5 +1,6 @@
 from flask import Flask, make_response, jsonify, request
 from flask_mysqldb import MySQL
+from flask_jwt_extended import JWTManager, create_access_token, jwt_required
 
 app = Flask(__name__)
 
@@ -9,8 +10,10 @@ app.config["MYSQL_PASSWORD"] = "admin"
 app.config["MYSQL_DB"] = "company"
 
 app.config["MYSQL_CURSORCLASS"] = "DictCursor"
+app.config["JWT_SECRET_KEY"] = "secret"
 
 mysql = MySQL(app)
+jwt = JWTManager(app)
 
 @app.route("/")
 def hello_world():
@@ -22,6 +25,15 @@ def data_fetch(query):
     data = cur.fetchall()
     cur.close()
     return data
+
+@app.route("/login", methods=["POST"])
+def login():
+    username = request.json.get("username", None)
+    password = request.json.get("password", None)
+    if username == "test" and password == "test":
+        access_token = create_access_token(identity={"username": username})
+        return jsonify(access_token=access_token), 200
+    return jsonify({"msg": "Bad username or password"}), 401
 
 @app.route("/employees", methods=["GET"])
 def get_employees():
