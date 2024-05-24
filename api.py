@@ -38,6 +38,11 @@ def get_dependentname_by_essn(Essn):
     data = data_fetch("""SELECT Dependent_name, Relationship FROM company.dependent where Essn = {}""".format(Essn))
     return make_response(jsonify(data), 200)
 
+@app.route("/deptlocations", methods=["GET"])
+def get_deptlocations():
+    data = data_fetch("""SELECT * FROM company.dept_locations;""")
+    return make_response(jsonify(data), 200)
+
 @app.route("/employees", methods=["POST"])
 def add_employee():
     cur = mysql.connection.cursor()
