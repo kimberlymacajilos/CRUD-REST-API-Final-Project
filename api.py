@@ -48,6 +48,11 @@ def get_essn_hours(Pno):
     data = data_fetch("""SELECT Essn, Hours FROM company.works_on where Pno = {}""".format(Pno))
     return make_response(jsonify(data), 200)
 
+@app.route("/project", methods=["GET"])
+def get_project():
+    data = data_fetch("""SELECT * FROM company.project;""")
+    return make_response(jsonify(data), 200)
+
 @app.route("/employees", methods=["POST"])
 def add_employee():
     cur = mysql.connection.cursor()
